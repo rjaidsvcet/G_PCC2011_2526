@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
+#include<stdbool.h>
 
 struct Stack {
     int size;
@@ -7,11 +9,10 @@ struct Stack {
     char *S;
 };
 
-void create (struct Stack *st) {
-    printf("Enter the size of the stack\n");
-    scanf("%d", &st -> size);
+void create (struct Stack *st, char *exp) {
+    st -> size = strlen(exp);
     st -> top = -1;
-    st -> S = (char *)malloc(st->size*sizeof(char));
+    st -> S = (char *)malloc(st->size*sizeof(strlen(exp)));
 }
 
 void display (struct Stack st) {
@@ -40,7 +41,7 @@ char pop (struct Stack *st) {
     return x;
 }
 
-int isBalanced (struct Stack st, char *exp) {
+bool isBalanced (struct Stack st, char *exp) {
     int i;
     for (i=0; exp[i]!='\0'; i++) {
         if (exp[i] == '(')
@@ -52,15 +53,15 @@ int isBalanced (struct Stack st, char *exp) {
         }
     }
     if (st.top == -1)
-        return 1;
+        return true;
     else
-        return 0;
+        return false;
 }
 
 int main () {
     struct Stack st;
-    create (&st);
-    char *exp = "(((a+b)*(c-d))";
+    char *exp = "((a+b)*(c-d))";
+    create (&st, exp);
     printf("%d", isBalanced(st, exp));
     return 0;
 }
